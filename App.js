@@ -1,20 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import React from "react";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import TabIcon from "./app/components/TabIcon";
+import { brand } from "./app/config/colors";
+import BookletScreen from "./app/screens/BookletScreen";
+import HomeScreen from "./app/screens/HomeScreen";
+import IndexScreen from "./app/screens/IndexScreen.jsx";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const Tab = createBottomTabNavigator();
+
+export default () => (
+  <NavigationContainer>
+    <Tab.Navigator
+      barStyle={{ backgroundColor: brand.ocean }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: () => <TabIcon icon={route.name.toLowerCase()} />,
+      })}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Index" component={IndexScreen} />
+      <Tab.Screen name="Booklet" component={BookletScreen} />
+    </Tab.Navigator>
+  </NavigationContainer>
+);
